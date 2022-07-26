@@ -84,7 +84,7 @@ public class AppsAdapter extends BaseAdapter
 
         // set value into textview
         PackageManager pm = mContext.getPackageManager();
-        String name = SettingsProvider.getAppDisplayName(mContext, actApp.packageName, actApp.loadLabel(pm));
+        String name = mSettings.getAppDisplayName(mContext, actApp.packageName, actApp.loadLabel(pm));
         ProgressBar progressBar = gridView.findViewById(R.id.progress_bar);
         TextView textView = gridView.findViewById(R.id.textLabel);
         textView.setText(name);
@@ -169,7 +169,7 @@ public class AppsAdapter extends BaseAdapter
 
         //set name
         PackageManager pm = mContext.getPackageManager();
-        String name = SettingsProvider.getAppDisplayName(mContext, actApp.packageName, actApp.loadLabel(pm));
+        String name = mSettings.getAppDisplayName(mContext, actApp.packageName, actApp.loadLabel(pm));
         final EditText input = dialog.findViewById(R.id.app_name);
         input.setText(name);
         dialog.findViewById(R.id.ok).setOnClickListener(view12 -> {

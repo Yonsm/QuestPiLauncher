@@ -6,12 +6,18 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 public class SettingsProvider
@@ -43,9 +49,27 @@ public class SettingsProvider
     private Map<String, String> mAppList = new HashMap<>();
     private Set<String> mAppGroups = new HashSet<>();
     private Set<String> mSelectedGroups = new HashSet<>();
+    private Properties mRename;
 
     private SettingsProvider(Context context) {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        InputStream stream = null;
+        try {
+            String path = context.getExternalFilesDir("rename.ini").getAbsolutePath();
+            stream = new FileInputStream(new File(path));
+        } catch (Exception ex) {
+            try {
+                stream = context.getResources().getAssets().open("rename.ini");
+            } catch (Exception ex2) {
+            }
+        }
+        mRename = new Properties();
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            mRename.load(reader);
+        } catch (Exception ex) {
+        }
     }
 
     public void setAppList(Map<String, String> appList)
@@ -225,11 +249,15 @@ public class SettingsProvider
         setSelectedGroups(selectFirst);
     }
 
-    public static String getAppDisplayName(Context context, String pkg, CharSequence label)
+    public String getAppDisplayName(Context context, String pkg, CharSequence label)
     {
         String name = PreferenceManager.getDefaultSharedPreferences(context).getString(pkg, "");
         if (!name.isEmpty()) {
             return name;
+        }
+
+        if (mRename.containsKey(pkg)) {
+            return String.valueOf(mRename.get(pkg));
         }
 
         String retVal = label.toString();
