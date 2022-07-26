@@ -24,4 +24,5 @@
     <string name="service_enable">启用</string>
     <string name="service_disable">禁用</string>
     <string name="service_multiwindow_desc">二维应用将总是在中间多窗口槽中打开。启用多窗口将应用在新窗口中打开，您确定要启用或禁用此功能吗？</string>
+    <string name="default_group_title">应用</string>
 </resources>

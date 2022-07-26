@@ -50,9 +50,11 @@ public class SettingsProvider
     private Set<String> mAppGroups = new HashSet<>();
     private Set<String> mSelectedGroups = new HashSet<>();
     private Properties mRename;
+    private String mDefaultGroupTitle;
 
     private SettingsProvider(Context context) {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        mDefaultGroupTitle = context.getString(R.string.default_group_title);
 
         InputStream stream = null;
         try {
@@ -188,7 +190,7 @@ public class SettingsProvider
         try
         {
             Set<String> def = new HashSet<>();
-            def.add("Apps");
+            def.add(mDefaultGroupTitle);
             mAppGroups = mPreferences.getStringSet(KEY_APP_GROUPS, def);
             mSelectedGroups = mPreferences.getStringSet(KEY_SELECTED_GROUPS, def);
 
