@@ -8,7 +8,7 @@
 
     <string name="settings_apps_enable">启用编辑</string>
     <string name="settings_apps_disable">禁用编辑</string>
-    <string name="settings_device">设备设置</string>
+    <string name="settings_device">系统设置</string>
     <string name="settings_look">自定义</string>
     <string name="settings_tweaks">系统调节</string>
     <string name="background_opacity">背景透明度</string>
